@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+{% block content %}
+<header class="top-header">
+    <h1>Traffic Severity Predictor</h1>
+    <p>Real-time machine learning inference mapping environmental anomalies to high-risk outcomes.</p>
+</header>
+
+<div class="dashboard-grid">
+    <!-- LEFT COLUMN: Live Predictor -->
+    <div class="dash-col" style="flex: 2;">
+        <section id="prediction" class="section">
+            <div class="card prediction-card">
+                <div class="card-header">
+                    <h3><i class="fa-solid fa-calculator"></i> Live Severity Predictor</h3>
+                </div>
+                
+                <div class="prediction-layout">
+                    <form id="prediction-form" class="standard-form">
+                        <div class="form-grid">
+                            <div class="input-group">
+                                <label>Latitude</label>
+                                <input type="number" step="any" id="Start_Lat" required value="40.10059">
+                            </div>
+                            <div class="input-group">
+                                <label>Longitude</label>
+                                <input type="number" step="any" id="Start_Lng" required value="-82.925194">
+                            </div>
+                            <div class="input-group">
+                                <label>Temperature (°F)</label>
+                                <input type="number" step="any" id="Temperature" required value="37.9">
+                            </div>
+                            <div class="input-group">
+                                <label>Humidity (%)</label>
+                                <input type="number" step="any" id="Humidity" required value="97.0">
+                            </div>
+                            <div class="input-group">
+                                <label>Pressure (in)</label>
+                                <input type="number" step="any" id="Pressure" required value="29.63">
+                            </div>
+                            <div class="input-group">
+                                <label>Visibility (mi)</label>
+                                <input type="number" step="any" id="Visibility" required value="7.0">
+                            </div>
+                            <div class="input-group">
+                                <label>Wind Speed (mph)</label>
+                                <input type="number" step="any" id="WindSpeed" required value="3.5">
+                            </div>
+                            <div class="input-group">
+                                <label>Time of Day</label>
+                                <select id="SunriseSunset">
+                                    <option value="Day" selected>Daylight</option>
+                                    <option value="Night">Nighttime</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" id="Crossing"> Pedestrian Crossing</label>
+                            <label><input type="checkbox" id="Junction"> Junction</label>
+                            <label><input type="checkbox" id="TrafficSignal"> Traffic Signal</label>
+                        </div>
+
+                        <button type="submit" class="btn-primary" id="predictBtn" style="margin-top: 1rem;"><i class="fa-solid fa-bolt"></i> Analyze Risk</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+        
+        <!-- DYNAMIC PREDICTION OUTPUT -->
+        <section class="section" style="margin-top: 1.5rem;">
+            <div id="resultBox" class="result-box idle">
+                <h4>Response Intercept</h4>
+                <h3 class="status-title">System Ready</h3>
+                <p class="result-reason" style="margin-bottom: 0;">Submit parameters to process the real-time AI outcome.</p>
+                
+                <!-- This entire div is hidden until JS populates it -->
+                <div id="dynamicPredictionUI" style="display: none; margin-top: 2rem;">
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+                        <!-- AI Explanation -->
+                        <div style="padding: 1rem; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-overlay);">
+                            <h4 style="margin-bottom: 0.8rem;"><i class="fa-solid fa-microchip"></i> Dynamic AI Explanation</h4>
+                            <p id="dynReason" style="font-size: 0.9rem; color: var(--text-main); line-height: 1.6;"></p>
+                        </div>
+                        
+                        <!-- Neural Net Confidence -->
+                        <div style="padding: 1rem; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-overlay);">
+                            <h4 style="margin-bottom: 1rem; text-align: center;"><i class="fa-solid fa-chart-pie"></i> Neural Network Certainty</h4>
+                            <div style="height: 150px; position: relative; width: 100%;">
+                                <canvas id="confidenceChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Model Comparison Dynamic Table -->
+                    <div style="margin-bottom: 2rem; overflow-x: auto; border: 1px solid var(--border-color); border-radius: 6px;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left;">
+                            <thead style="background: var(--bg-overlay);">
+                                <tr>
+                                    <th style="padding: 0.75rem; border-bottom: 2px solid var(--border-color);"><i class="fa-solid fa-robot"></i> Model Architecture</th>
+                                    <th style="padding: 0.75rem; border-bottom: 2px solid var(--border-color);">Accuracy</th>
+                                    <th style="padding: 0.75rem; border-bottom: 2px solid var(--border-color);">Precision</th>
+                                    <th style="padding: 0.75rem; border-bottom: 2px solid var(--border-color);">Recall</th>
+                                    <th style="padding: 0.75rem; border-bottom: 2px solid var(--border-color);">F1-Score</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dynamicModelTable">
+                                <!-- JS Injected Rows -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Post-Prediction Dynamic Graphs -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                        <div style="padding: 1rem; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-overlay);">
+                            <h4 style="text-align: center; margin-bottom: 1rem;">Live Accuracy Ranking</h4>
+                            <div style="height: 180px; position: relative;">
+                                <canvas id="liveBarChart"></canvas>
+                            </div>
+                        </div>
+                        <div style="padding: 1rem; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-overlay);">
+                            <h4 style="text-align: center; margin-bottom: 1rem;">Live Metric Comparison</h4>
+                            <div style="height: 180px; position: relative;">
+                                <canvas id="liveMetricChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- RIGHT COLUMN: Guidelines & Logic Panels -->
+    <div class="dash-col" style="flex: 1;">
+        <!-- Input Guidance Panel -->
+        <div class="card" style="margin-bottom: 1.5rem;">
+            <div class="card-header">
+                <h3><i class="fa-solid fa-book"></i> Input Guidance Panel</h3>
+            </div>
+            <p class="text-muted" style="font-size: 0.85rem; margin-bottom: 1rem;">Ensure submitted test data falls within standard U.S. reporting bounds to prevent AI hallucination:</p>
+            <ul style="list-style: none; margin: 0; padding: 0; font-size: 0.85rem; color: var(--text-main); display: flex; flex-direction: column; gap: 0.6rem;">
+                <li style="display: flex; justify-content: space-between; padding: 0.5rem; background: var(--bg-overlay); border-radius: 4px;"><strong>Temperature:</strong> <span>-10°F to 120°F</span></li>
+                <li style="display: flex; justify-content: space-between; padding: 0.5rem; background: var(--bg-overlay); border-radius: 4px;"><strong>Humidity:</strong> <span>0% – 100%</span></li>
+                <li style="display: flex; justify-content: space-between; padding: 0.5rem; background: var(--bg-overlay); border-radius: 4px;"><strong>Visibility:</strong> <span>0.1 mi – 10.0 mi</span></li>
+                <li style="display: flex; justify-content: space-between; padding: 0.5rem; background: var(--bg-overlay); border-radius: 4px;"><strong>Wind Speed:</strong> <span>0 mph – 50 mph</span></li>
+                <li style="display: flex; justify-content: space-between; padding: 0.5rem; background: var(--bg-overlay); border-radius: 4px;"><strong>Atm. Pressure:</strong> <span>28.0 – 32.0 inHg</span></li>
+            </ul>
+        </div>
+
+        <!-- AI Logic Explanation Panel -->
+        <div class="card" style="border: 2px solid var(--primary); background: rgba(0, 94, 162, 0.05);">
+            <div class="card-header">
+                <h3 style="color: var(--primary);"><i class="fa-solid fa-brain"></i> AI Logic Ruleset</h3>
+            </div>
+            <p class="text-muted" style="font-size: 0.85rem; margin-bottom: 1rem;">The Neural Network isolates severe risks by anchoring heavily on combined anomaly vectors:</p>
+            <div style="display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.85rem;">
+                <div style="padding: 0.6rem; border-left: 3px solid var(--alert); background: var(--bg-overlay); border-radius: 4px;">
+                    <strong style="color: var(--alert);"><i class="fa-solid fa-eye-slash"></i> Vis < 3 Miles:</strong> Indicates massive blind spots, immediately triggering High Risk categorization.
+                </div>
+                <div style="padding: 0.6rem; border-left: 3px solid var(--alert); background: var(--bg-overlay); border-radius: 4px;">
+                    <strong style="color: var(--alert);"><i class="fa-solid fa-wind"></i> Wind > 15 mph:</strong> Aerodynamic instability raises loss of lateral control risk.
+                </div>
+                <div style="padding: 0.6rem; border-left: 3px solid var(--alert); background: var(--bg-overlay); border-radius: 4px;">
+                    <strong style="color: var(--alert);"><i class="fa-solid fa-temperature-arrow-down"></i> Temp < 32°F:</strong> Thermal Freezing drastically multiplies accident mortality due to black ice vectoring.
+                </div>
+                <div style="padding: 0.6rem; border-left: 3px solid var(--alert); background: var(--bg-overlay); border-radius: 4px;">
+                    <strong style="color: var(--alert);"><i class="fa-solid fa-traffic-light"></i> Local Infrastructure:</strong> Compounding high-speed routes with Junctions/Signals dynamically shifts probability curves.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

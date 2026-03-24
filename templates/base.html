@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>National Traffic Risk Intelligence</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard-wrapper">
+        <!-- Left Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="sidebar-logo">
+                <h2>Traffic Risk</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="{{ url_for('index') }}" class="{% if active_page == 'home' %}active{% endif %}"><i class="fa-solid fa-house"></i> Home Base</a>
+                <a href="{{ url_for('dataset') }}" class="{% if active_page == 'dataset' %}active{% endif %}"><i class="fa-solid fa-database"></i> Dataset Insights</a>
+                <a href="{{ url_for('analytics') }}" class="{% if active_page == 'analytics' %}active{% endif %}"><i class="fa-solid fa-server"></i> Model Analytics</a>
+                <a href="{{ url_for('predictor') }}" class="{% if active_page == 'predictor' %}active{% endif %}"><i class="fa-solid fa-calculator"></i> Severity Predictor</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+    
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

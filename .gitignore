@@ -1,0 +1,7 @@
+*.pkl
+__pycache__/
+.venv/
+.ipynb_checkpoints/
+Accidents.csv
+archive.zip
+*.zip

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block content %}
+<header class="top-header">
+    <h1>National Traffic Risk Intelligence System</h1>
+    <p>An advanced AI-based traffic severity prediction system analyzing weather factors, road infrastructure, and spatial intelligence.</p>
+</header>
+
+<section id="overview" class="section">
+    <div class="grid-2">
+        <div class="card">
+            <div class="card-header">
+                <h3><i class="fa-solid fa-list-check"></i> System Features</h3>
+            </div>
+            <p class="text-muted">The machine learning model analyzes 11 critical environmental and road factors to predict accidents.</p>
+            <ul class="feature-list">
+                <li><strong>Weather Factors:</strong> Temperature, Humidity, Pressure, Visibility.</li>
+                <li><strong>Dynamic Conditions:</strong> Wind Speed, Time of Day (Daylight / Nighttime).</li>
+                <li><strong>Location & Infrastructure:</strong> Latitude, Longitude, Crossings, Junctions, Traffic Signals.</li>
+            </ul>
+            
+            <div style="margin-top: 1.5rem; border-top: 1px dashed var(--border-color); padding-top: 1.2rem;">
+                <h4 style="margin-bottom: 0.5rem; font-size: 0.95rem; color: var(--text-main);"><i class="fa-solid fa-triangle-exclamation" style="color: var(--alert);"></i> Critical Severity Thresholds Guide</h4>
+                <p class="text-muted" style="font-size: 0.85rem; margin-bottom: 0.8rem;">The AI actively flags parameters exceeding the following historic baselines as high-risk triggers for severe fatal accidents:</p>
+                <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.85rem; padding: 0.5rem 0.8rem; background: var(--bg-overlay); border: 1px solid var(--border-color); border-radius: 4px;">
+                        <span><i class="fa-solid fa-eye-low-vision" style="color: var(--primary); width: 20px;"></i> Visibility Range</span> 
+                        <strong style="color: var(--alert);">< 3.0 miles</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.85rem; padding: 0.5rem 0.8rem; background: var(--bg-overlay); border: 1px solid var(--border-color); border-radius: 4px;">
+                        <span><i class="fa-solid fa-wind" style="color: var(--primary); width: 20px;"></i> Wind Velocity</span> 
+                        <strong style="color: var(--alert);">> 15.0 mph</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.85rem; padding: 0.5rem 0.8rem; background: var(--bg-overlay); border: 1px solid var(--border-color); border-radius: 4px;">
+                        <span><i class="fa-solid fa-temperature-arrow-down" style="color: var(--primary); width: 20px;"></i> Temperature</span> 
+                        <strong style="color: var(--alert);">< 32.0°F (Freeze)</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.85rem; padding: 0.5rem 0.8rem; background: var(--bg-overlay); border: 1px solid var(--border-color); border-radius: 4px;">
+                        <span><i class="fa-solid fa-road" style="color: var(--primary); width: 20px;"></i> Infrastructure</span> 
+                        <strong style="color: var(--alert);">Junctions / Crossings</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h3><i class="fa-solid fa-layer-group"></i> Severity Scale</h3>
+            </div>
+            <p class="text-muted">How the model categorizes risk into a simple binary outcome:</p>
+            <br>
+            <div class="severity-scale">
+                <div class="scale-item">
+                    <span class="badge badge-safe">Non-Severe</span>
+                    <p>Routine incidents, minor property damage, overall minimal traffic delay.</p>
+                </div>
+                <div class="scale-item">
+                    <span class="badge badge-alert">Severe</span>
+                    <p>Major accidents involving injuries, fatalities, or complete road closures.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

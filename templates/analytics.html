@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% block content %}
+<header class="top-header">
+    <h1>Model Analytics Engine</h1>
+    <p>Performance telemetry and structured ranking of the backend Artificial Intelligence models.</p>
+</header>
+
+<section class="section">
+    <div class="card">
+        <div class="card-header">
+            <h3><i class="fa-solid fa-ranking-star"></i> AI Model Leaderboard & Telemetry</h3>
+        </div>
+        
+        <!-- Executive KPI Bar -->
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; padding: 1.5rem; background: rgba(255,255,255,0.6); backdrop-filter: blur(10px); border-radius: 12px; border: 1px solid rgba(255,255,255,0.8); box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
+            <div style="text-align: center; border-right: 1px solid var(--border-color);">
+                <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; letter-spacing: 1px; margin-bottom: 0.4rem;">Training Volume</div>
+                <div style="font-size: 1.4rem; color: var(--text-main); font-weight: 800; font-family: monospace;">12,000</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted);">(80% Split)</div>
+            </div>
+            <div style="text-align: center; border-right: 1px solid var(--border-color);">
+                <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; letter-spacing: 1px; margin-bottom: 0.4rem;">Validation Holdout</div>
+                <div style="font-size: 1.4rem; color: var(--text-main); font-weight: 800; font-family: monospace;">3,000</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted);">(20% Unseen)</div>
+            </div>
+            <div style="text-align: center; border-right: 1px solid var(--border-color);">
+                <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; letter-spacing: 1px; margin-bottom: 0.4rem;">Feature Dimensions</div>
+                <div style="font-size: 1.4rem; color: var(--primary); font-weight: 800; font-family: monospace;">11</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted);">(Reduced via SVD)</div>
+            </div>
+            <div style="text-align: center;">
+                <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; letter-spacing: 1px; margin-bottom: 0.4rem;">Primary Inference</div>
+                <div style="font-size: 1.4rem; color: var(--safe); font-weight: 800; font-family: monospace;">MLP</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted);">(Neural Network)</div>
+            </div>
+        </div>
+
+        <p class="text-muted" style="margin-bottom: 1.5rem; text-align: center; max-width: 800px; margin-left: auto; margin-right: auto;">The system actively evaluates three diverse machine learning models via <strong>TruncatedSVD</strong> component reduction. Results are based on exclusively clean, hidden hold-out data to prevent rote memorization overfitting.</p>
+        
+        <div class="analytics-layout" style="display: flex; flex-direction: column; gap: 2rem;">
+            
+            <!-- Rigidly Ordered Ranking List -->
+            <div class="metrics-list" id="metrics-grid">
+                <!-- 1. MLP -->
+                <div class="metric-box top-model">
+                    <h4 style="display: flex; align-items: center; color: var(--primary);">
+                        #1. MLP Neural Network <span class="badge badge-safe badge-top" style="margin-left: 0.5rem; font-size: 0.75rem;">TOP PRIMARY</span>
+                    </h4>
+                    <div class="m-row">
+                        <div class="m-row-text"><span>Accuracy:</span> <span class="m-value">{{ metrics['MLP_Neural_Net']['Accuracy'] }}%</span></div>
+                        <div class="progress-bar"><div class="progress-fill safe" style="width: {{ metrics['MLP_Neural_Net']['Accuracy'] }}%;"></div></div>
+                    </div>
+                    <div class="m-row">
+                        <div class="m-row-text"><span>Precision:</span> <span class="m-value">{{ metrics['MLP_Neural_Net']['Precision'] }}%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: {{ metrics['MLP_Neural_Net']['Precision'] }}%;"></div></div>
+                    </div>
+                    <div class="m-row">
+                        <div class="m-row-text"><span>Recall:</span> <span class="m-value">{{ metrics['MLP_Neural_Net']['Recall'] }}%</span></div>
+                        <div class="progress-bar"><div class="progress-fill warn" style="width: {{ metrics['MLP_Neural_Net']['Recall'] }}%;"></div></div>
+                    </div>
+                    <div class="m-row">
+                        <div class="m-row-text"><span>F1-Score:</span> <span class="m-value">{{ metrics['MLP_Neural_Net']['F1_Score'] }}%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: {{ metrics['MLP_Neural_Net']['F1_Score'] }}%;"></div></div>
+                    </div>
+                </div>
+
+                <!-- 2. Decision Tree -->
+                <div class="metric-box">
+                    <h4 style="display: flex; align-items: center;">#2. Decision Tree</h4>
+                    <div class="m-row">
+                        <div class="m-row-text"><span>Accuracy:</span> <span class="m-value">{{ metrics['Decision_Tree']['Accuracy'] }}%</span></div>
+                        <div class="progress-bar"><div class="progress-fill safe" style="width: {{ metrics['Decision_Tree']['Accuracy'] }}%;"></div></div>
+                    </div>
+                    <div class="m-row">
+                        <div class="m-row-text"><span>Precision:</span> <span class="m-value">{{ metrics['Decision_Tree']['Precision'] }}%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: {{ metrics['Decision_Tree']['Precision'] }}%;"></div></div>
+                    </div>
+                    <div class="m-row">
+                        <div class="m-row-text"><span>Recall:</span> <span class="m-value">{{ metrics['Decision_Tree']['Recall'] }}%</span></div>
+                        <div class="progress-bar"><div class="progress-fill warn" style="width: {{ metrics['Decision_Tree']['Recall'] }}%;"></div></div>
+                    </div>
+                    <div class="m-row">
+                        <div class="m-row-text"><span>F1-Score:</span> <span class="m-value">{{ metrics['Decision_Tree']['F1_Score'] }}%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: {{ metrics['Decision_Tree']['F1_Score'] }}%;"></div></div>
+                    </div>
+                </div>
+
+                <!-- 3. SVM -->
+                <div class="metric-box">
+                    <h4 style="display: flex; align-items: center;">#3. Support Vector Machine</h4>
+                    <div class="m-row">
+                        <div class="m-row-text"><span>Accuracy:</span> <span class="m-value">{{ metrics['SVM']['Accuracy'] }}%</span></div>
+                        <div class="progress-bar"><div class="progress-fill safe" style="width: {{ metrics['SVM']['Accuracy'] }}%;"></div></div>
+                    </div>
+                    <div class="m-row">
+                        <div class="m-row-text"><span>Precision:</span> <span class="m-value">{{ metrics['SVM']['Precision'] }}%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: {{ metrics['SVM']['Precision'] }}%;"></div></div>
+                    </div>
+                    <div class="m-row">
+                        <div class="m-row-text"><span>Recall:</span> <span class="m-value">{{ metrics['SVM']['Recall'] }}%</span></div>
+                        <div class="progress-bar"><div class="progress-fill warn" style="width: {{ metrics['SVM']['Recall'] }}%;"></div></div>
+                    </div>
+                    <div class="m-row">
+                        <div class="m-row-text"><span>F1-Score:</span> <span class="m-value">{{ metrics['SVM']['F1_Score'] }}%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: {{ metrics['SVM']['F1_Score'] }}%;"></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Container -->
+            <div class="chart-container-row" style="margin-top: 1rem;">
+                <div class="card" style="padding: 1.5rem; display: flex; flex-direction: column;">
+                    <h4 style="text-align: center; font-size: 1.1rem; margin-bottom: 1.5rem; color: var(--primary);">Global Accuracy Performance</h4>
+                    <div class="chart-container" style="height: 300px; position: relative; width: 100%; flex: 1;">
+                        <canvas id="accuracyChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="card" style="padding: 1.5rem; display: flex; flex-direction: column;">
+                    <h4 style="text-align: center; font-size: 1.1rem; margin-bottom: 1.5rem; color: var(--primary);">Multi-Metric Telemetry (Precision, Recall, F1)</h4>
+                    <div class="chart-container" style="height: 300px; position: relative; width: 100%; flex: 1;">
+                        <canvas id="multiMetricChart"></canvas>
+                    </div>
+                </div>
+            </div>
+    </div>
+</section>
+
+<!-- Safely pass metrics dict to JS for rendering -->
+<script id="metrics-data" type="application/json">
+    {{ metrics | tojson | safe }}
+</script>
+{% endblock %}

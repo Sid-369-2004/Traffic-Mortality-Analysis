@@ -1,0 +1,20 @@
+{
+    "Decision_Tree": {
+        "Accuracy": 62.28,
+        "Precision": 60.27,
+        "Recall": 18.34,
+        "F1_Score": 28.12
+    },
+    "SVM": {
+        "Accuracy": 63.56,
+        "Precision": 59.02,
+        "Recall": 30.84,
+        "F1_Score": 40.51
+    },
+    "MLP_Neural_Net": {
+        "Accuracy": 68.18,
+        "Precision": 62.14,
+        "Recall": 53.48,
+        "F1_Score": 57.49
+    }
+}
