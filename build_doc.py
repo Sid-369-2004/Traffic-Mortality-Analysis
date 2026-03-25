@@ -8,7 +8,7 @@ def update_report():
         
         # Chapter 1
         if "A brief introduction to the topic assigned" in txt:
-            para.text = "The TrafficMortality Analysis system is an advanced AI-powered diagnostic tool designed to predict traffic accident severity. By analyzing a massive dataset of real-world traffic collisions, the system evaluates 11 critical environmental and infrastructure dimensions—including coordinate geography, meteorological pressure, humidity, wind speed, and junction proximity. The primary objective is to categorize incidents as either 'Non-Severe' or 'Severe/Fatal'. The problem is resolved using Python's full-stack capabilities, integrated with a Flask web architecture for dynamic deployment. The intelligence engine actively compares three supervised machine learning algorithms: the Multi-Layer Perceptron (MLP) Neural Network, Decision Trees, and Support Vector Machines (SVM)."
+            para.text = "The Traffic Mortality Analysis system is an advanced AI-powered diagnostic tool designed to predict traffic accident severity. By analyzing a massive dataset of real-world traffic collisions, the system evaluates 11 critical environmental and infrastructure dimensions—including coordinate geography, meteorological pressure, humidity, wind speed, and junction proximity. The primary objective is to categorize incidents as either 'Non-Severe' or 'Severe/Fatal'. The problem is resolved using Python's full-stack capabilities, integrated with a Flask web architecture for dynamic deployment. The intelligence engine actively compares three supervised machine learning algorithms: the Multi-Layer Perceptron (MLP) Neural Network, Decision Trees, and Support Vector Machines (SVM)."
         
         # Chapter 2
         elif "This section should describe the issues determined" in txt:
@@ -35,7 +35,7 @@ def update_report():
             
         # Chapter 6
         elif "Conclude the report using the findings" in txt:
-            para.text = "The deployment of the TrafficMortality Analysis system successfully demonstrates that environmental and infrastructural metadata can mathematically predict the severity of traffic collisions. By enforcing strict data sanitation and utilizing an MLP Neural Network optimized via TruncatedSVD, the system achieves rapid inference speeds suitable for real-world deployment on Edge networks (Vercel). The project proves that integrating advanced Python AI algorithms into a full-stack web application yields a professional, government-grade utility for emergency risk assessment."
+            para.text = "The deployment of the Traffic Mortality Analysis system successfully demonstrates that environmental and infrastructural metadata can mathematically predict the severity of traffic collisions. By enforcing strict data sanitation and utilizing an MLP Neural Network optimized via TruncatedSVD, the system achieves rapid inference speeds suitable for real-world deployment on Edge networks (Vercel). The project proves that integrating advanced Python AI algorithms into a full-stack web application yields a professional, government-grade utility for emergency risk assessment."
 
     # For Chapter 3 which had no placeholder text, we manually find the Chapter 3 header and insert
     for i, para in enumerate(doc.paragraphs):
