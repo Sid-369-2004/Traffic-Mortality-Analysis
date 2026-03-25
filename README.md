@@ -1,4 +1,4 @@
-# 🚦 National Traffic Risk Intelligence System
+# 🚦 TrafficMortality Analysis
 
 ![Status](https://img.shields.io/badge/Status-Active-success)
 ![Python](https://img.shields.io/badge/Python-3.12-blue)
@@ -13,7 +13,7 @@
 ---
 
 ## 📖 Overview
-The National Traffic Risk Intelligence System is a full-stack, AI-powered diagnostic application engineered to predict the severity of traffic accidents based on multi-dimensional spatial and meteorological data.
+The TrafficMortality Analysis system is a full-stack, AI-powered diagnostic application engineered to predict the severity of traffic accidents based on multi-dimensional spatial and meteorological data.
 
 Moving beyond basic static analysis, this system is encapsulated in a Multi-Page Application (MPA) featuring real-time data visualizations, rigorous NaN-omission data pipelines, and a competitive machine learning architecture where three distinct algorithms are continuously evaluated on out-of-sample data.
 
