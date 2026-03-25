@@ -31,7 +31,7 @@ def index():
 def dataset():
     # Load first clean 20 rows of dataset
     try:
-        df = pd.read_csv('Accidents.csv', nrows=100)
+        df = pd.read_csv('sample_dataset.csv', nrows=200)
         # Drop heavily null columns first so they don't force dropna to purge valid records
         df = df.drop(columns=['End_Lat', 'End_Lng'], errors='ignore')
         # Remove any rows with missing data and take the top 20
